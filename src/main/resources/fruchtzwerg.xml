@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fruchtzwerg-definition>
+	<WANem>
+		<host>127.0.0.1</host>
+		<bothways>true</bothways>
+	</WANem>
+	<Test>
+		<iterations>20</iterations>
+		<warmup>true</warmup>
+		<proxy>
+			<address>proxy</address>
+			<port>8080</port>
+		</proxy>
+		<urls>
+			<url>http://127.0.0.1/index.html</url>
+		</urls>
+		<networks>
+			<network>
+				<!-- Default network -->
+				<bandwidth>0</bandwidth>
+				<delay>0</delay>
+				<packet-loss>0</packet-loss>
+			</network>
+			<network>
+				<!-- DSL light -->
+				<bandwidth>768</bandwidth>
+				<delay>50</delay>
+				<packet-loss>0</packet-loss>
+			</network>
+			<network>
+				<!-- HSDPA category 6 -->
+				<bandwidth>3600</bandwidth>
+				<delay>150</delay>
+				<packet-loss>0</packet-loss>
+			</network>
+			<network>
+				<!-- HSDPA category 8 -->
+				<bandwidth>7200</bandwidth>
+				<delay>150</delay>
+				<packet-loss>0</packet-loss>
+			</network>
+		</networks>
+	</Test>
+</fruchtzwerg-definition>
