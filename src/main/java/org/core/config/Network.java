@@ -14,30 +14,8 @@
 package org.core.config;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.configuration.Configuration;
 
 public class Network {
-
-    public static Network[] getNetworks(Configuration config) {
-        List<Object> bandwidth = config.getList("Test.networks.network.bandwidth");
-        List<Object> delay = config.getList("Test.networks.network.delay");
-        List<Object> packetLoss = config.getList("Test.networks.network.packet-loss");
-
-        List<Network> networks = new ArrayList<Network>();
-
-        for (int i = 0; i < bandwidth.size(); i++) {
-            Integer b = new Integer((String) bandwidth.get(i));
-            Integer d = new Integer((String) delay.get(i));
-            Integer p = new Integer((String) packetLoss.get(i));
-
-            networks.add(new Network(b, d, p));
-        }
-
-        return networks.toArray(new Network[networks.size()]);
-    }
 
     private int bandwidth;
     private int delay;

@@ -13,15 +13,14 @@
  */
 package org.core;
 
-import java.net.MalformedURLException;
-
+import org.core.config.TestCase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class FirefoxBenchmark extends Benchmark {
 
-    public FirefoxBenchmark(String url) throws MalformedURLException {
-        super(url);
+    public FirefoxBenchmark(TestCase test) {
+        super(test);
     }
 
     @Override

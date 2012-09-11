@@ -64,6 +64,7 @@ public class WANemAPI {
         } catch (Exception e) {
             System.err.println("WANem API not found");
             e.printStackTrace();
+            driver.close();
         }
     }
 

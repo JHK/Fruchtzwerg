@@ -13,26 +13,31 @@
  */
 package org.core;
 
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-
 import org.core.config.Config;
 import org.core.config.Network;
+import org.core.config.TestCase;
 
 public class Main {
 
-    public static void main(String[] args) throws MalformedURLException, InstantiationException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static void main(String[] args) throws Exception {
         WANemAPI wanem = new WANemAPI(Config.WANem_HOST, Config.WANem_BOTHWAYS);
 
-        for (String host : Config.TEST_URLS) {
-            for (Network network : Config.TEST_NETWORKS) {
-                wanem.set(network.getBandwidth(), network.getDelay(), network.getPacketLoss());
-                @SuppressWarnings("unchecked")
-                Benchmark bench = (Benchmark) Config.BROWSER.getConstructor(String.class).newInstance(host);
-                bench.run();
-                bench.printSummary(System.out);
-                network.printConfig(System.out);
+        for (TestCase test : Config.TESTS) {
+            Network network = test.getNetwork();
+            wanem.set(network.getBandwidth(), network.getDelay(), network.getPacketLoss());
+
+            @SuppressWarnings("rawtypes")
+            Class browser = Benchmark.getBrowserClass(test.getBrowser());
+            @SuppressWarnings("unchecked")
+            Benchmark bench = (Benchmark) browser.getConstructor(TestCase.class).newInstance(test);
+
+            bench.run();
+            bench.printSummary(System.out);
+            network.printConfig(System.out);
+
+            if (Config.HALT_BETWEEN_TESTS) {
+                System.err.println("Press enter for next test");
+                System.in.read();                
             }
         }
     }

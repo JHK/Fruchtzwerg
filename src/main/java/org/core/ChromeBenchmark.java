@@ -13,15 +13,14 @@
  */
 package org.core;
 
-import java.net.MalformedURLException;
-
+import org.core.config.TestCase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ChromeBenchmark extends Benchmark {
 
-    public ChromeBenchmark(String url) throws MalformedURLException {
-        super(url);
+    public ChromeBenchmark(TestCase test) {
+        super(test);
     }
 
     @SuppressWarnings("deprecation")

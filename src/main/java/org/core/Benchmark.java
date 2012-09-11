@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.core.config.Config;
+import org.core.config.TestCase;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -26,12 +26,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public abstract class Benchmark {
 
-    private final String         url;
+    @SuppressWarnings("rawtypes")
+    public static Class getBrowserClass(String browserString) {
+        switch (browserString) {
+            case "Firefox":
+                return FirefoxBenchmark.class;
+            case "Chrome":
+                return ChromeBenchmark.class;
+            default:
+                return FirefoxBenchmark.class;
+        }
+    }
+
+    private final TestCase       test;
     private Date                 start;
     private SummaryStatisticsExt browserSummary;
 
-    public Benchmark(String url) {
-        this.url = url;
+    public Benchmark(TestCase test) {
+        this.test = test;
         this.browserSummary = new SummaryStatisticsExt();
     }
 
@@ -40,10 +52,10 @@ public abstract class Benchmark {
     protected DesiredCapabilities getCapabilities() {
         DesiredCapabilities cap = new DesiredCapabilities();
 
-        if (Config.PROXY_ADDRESS != null && Config.PROXY_PORT != null) {
-            Proxy proxy = new Proxy();
-            proxy.setHttpProxy(Config.PROXY_ADDRESS + ":" + Config.PROXY_PORT);
-            cap.setCapability(CapabilityType.PROXY, proxy);
+        if (test.getProxy() != null && !test.getProxy().equals("")) {
+            Proxy p = new Proxy();
+            p.setHttpProxy(test.getProxy());
+            cap.setCapability(CapabilityType.PROXY, p);
         }
 
         return cap;
@@ -54,17 +66,17 @@ public abstract class Benchmark {
 
         start = new Date(System.currentTimeMillis());
 
-        if (Config.WARMUP)
+        if (test.getWarmup())
             for (int i = 0; i < 3; i++) {
-                driver.get(url);
-                sleep(Config.SLEEP_INTERVAL);
+                driver.get(test.getUrl());
+                sleep(test.getSleepInterval());
             }
 
-        for (int i = 0; i < Config.ITERATIONS; i++) {
+        for (int i = 0; i < test.getIterations(); i++) {
             long t0 = System.nanoTime();
-            driver.get(url);
+            driver.get(test.getUrl());
             browserSummary.addValue((System.nanoTime() - t0) / 1000000L);
-            sleep(Config.SLEEP_INTERVAL);
+            sleep(test.getSleepInterval());
         }
 
         driver.close();
@@ -72,7 +84,7 @@ public abstract class Benchmark {
 
     public void printSummary(PrintStream ps) {
         ps.println("--- Summary ---");
-        ps.println("Url:\t\t" + this.url);
+        ps.println("Url:\t\t" + this.test.getUrl());
         ps.println("Started:\t" + this.start.toString());
         ps.println("Finished:\t" + new Date(System.currentTimeMillis()).toString());
 
