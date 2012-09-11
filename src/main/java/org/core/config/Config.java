@@ -6,7 +6,6 @@ import org.apache.commons.configuration.XMLConfiguration;
 
 public class Config {
 
-    public static final String     BROWSER            = getConfig().getString("Global.browser", "Firefox");
     public static final Integer    SLEEP_INTERVAL     = getConfig().getInt("Global.sleep_interval");
     public static final Integer    ITERATIONS         = getConfig().getInt("Global.iterations");
     public static final Boolean    WARMUP             = getConfig().getBoolean("Global.warmup");

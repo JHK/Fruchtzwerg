@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fruchtzwerg-definition>
 	<Global>
-		<browser>Firefox</browser>
 		<sleep_interval>50</sleep_interval>
 		<iterations>20</iterations>
 		<warmup>true</warmup>
@@ -13,6 +12,7 @@
 	</WANem>
 	<Tests>
 		<TestCase>
+			<browser>Firefox</browser>
 			<proxy>localhost:8080</proxy>
 			<url>http://127.0.0.1/index.html</url>
 			<network>
@@ -23,6 +23,7 @@
 			</network>
 		</TestCase>
 		<TestCase>
+			<browser>Firefox</browser>
 			<proxy>localhost:8080</proxy>
 			<url>http://127.0.0.1/index.html</url>
 			<network>
@@ -33,6 +34,7 @@
 			</network>
 		</TestCase>
 		<TestCase>
+			<browser>Firefox</browser>
 			<proxy>localhost:8080</proxy>
 			<url>http://127.0.0.1/index.html</url>
 			<network>

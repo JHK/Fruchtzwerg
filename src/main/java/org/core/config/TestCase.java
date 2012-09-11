@@ -23,6 +23,7 @@ public class TestCase {
     public static TestCase[] getTestCases(Configuration config) {
         String[] url_array = config.getStringArray("Tests.TestCase.url");
         String[] proxy_array = config.getStringArray("Tests.TestCase.proxy");
+        String[] browser_array = config.getStringArray("Tests.TestCase.browser");
 
         String[] bandwidth_array = config.getStringArray("Tests.TestCase.network.bandwidth");
         String[] delay_array = config.getStringArray("Tests.TestCase.network.delay");
@@ -36,7 +37,7 @@ public class TestCase {
             Integer packetLoss = new Integer(packetLoss_array[i]);
             Network network = new Network(bandwidth, delay, packetLoss);
 
-            TestCase testCase = new TestCase(url_array[i], proxy_array[i], network);
+            TestCase testCase = new TestCase(url_array[i], proxy_array[i], browser_array[i], network);
             tests.add(testCase);
         }
 
@@ -46,11 +47,13 @@ public class TestCase {
     private final String  url;
     private final Network network;
     private final String  proxy;
+    private final String  browser;
 
-    public TestCase(String url, String proxy, Network network) {
+    public TestCase(String url, String proxy, String browser, Network network) {
         this.url = url;
-        this.network = network;
         this.proxy = proxy;
+        this.browser = browser;
+        this.network = network;
     }
 
     public String getProxy() {
@@ -66,7 +69,7 @@ public class TestCase {
     }
 
     public String getBrowser() {
-        return Config.BROWSER;
+        return browser;
     }
 
     public Integer getIterations() {
