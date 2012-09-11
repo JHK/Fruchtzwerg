@@ -28,6 +28,8 @@ public class ChromeBenchmark extends Benchmark {
     protected WebDriver getWebDriver(TestCase test) {
         ChromeOptions options = new ChromeOptions();
 
+        options.addArguments("user-agent=Mozilla/5.0 (Linux; U; Android 2.1-update1; de-de; HTC Desire 1.19.161.5 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17");
+        
         if (test.getProxy() != null && !test.getProxy().equals("")) {
             if (test.getProxy().contains(":"))
                 options.addArguments("proxy-server=" + test.getProxy());
