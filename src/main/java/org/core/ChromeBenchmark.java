@@ -16,6 +16,7 @@ package org.core;
 import org.core.config.TestCase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ChromeBenchmark extends Benchmark {
 
@@ -25,6 +26,15 @@ public class ChromeBenchmark extends Benchmark {
 
     @Override
     protected WebDriver getWebDriver(TestCase test) {
-        return new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        if (test.getProxy() != null && !test.getProxy().equals("")) {
+            if (test.getProxy().contains(":"))
+                options.addArguments("proxy-server=" + test.getProxy());
+            else
+                options.addArguments("proxy-pac-url=" + test.getProxy());
+        }
+
+        return new ChromeDriver(options);
     }
 }
