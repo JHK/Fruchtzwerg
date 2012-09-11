@@ -14,8 +14,6 @@
 package org.core;
 
 import java.io.PrintStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,12 +26,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public abstract class Benchmark {
 
-    private final URL            url;
+    private final String         url;
     private Date                 start;
     private SummaryStatisticsExt browserSummary;
 
-    public Benchmark(String url) throws MalformedURLException {
-        this.url = new URL(url);
+    public Benchmark(String url) {
+        this.url = url;
         this.browserSummary = new SummaryStatisticsExt();
     }
 
@@ -58,13 +56,13 @@ public abstract class Benchmark {
 
         if (Config.WARMUP)
             for (int i = 0; i < 3; i++) {
-                driver.get(getUrl());
+                driver.get(url);
                 sleep(Config.SLEEP_INTERVAL);
             }
 
         for (int i = 0; i < Config.ITERATIONS; i++) {
             long t0 = System.nanoTime();
-            driver.get(getUrl());
+            driver.get(url);
             browserSummary.addValue((System.nanoTime() - t0) / 1000000L);
             sleep(Config.SLEEP_INTERVAL);
         }
@@ -75,7 +73,7 @@ public abstract class Benchmark {
     public void printSummary(PrintStream ps) {
         ps.println("--- Summary ---");
         ps.println("Url:\t\t" + this.url);
-        ps.println("Started:\t" + start.toString());
+        ps.println("Started:\t" + this.start.toString());
         ps.println("Finished:\t" + new Date(System.currentTimeMillis()).toString());
 
         ps.println("\nBrowser statistics:");
@@ -94,14 +92,6 @@ public abstract class Benchmark {
             sb.append(s + "\n");
         }
         ps.println(sb.toString());
-    }
-
-    public String getUrl() {
-        return this.url.toString();
-    }
-
-    public SummaryStatisticsExt getBrowserSummary() {
-        return this.browserSummary;
     }
 
     private void sleep(int duration) {
