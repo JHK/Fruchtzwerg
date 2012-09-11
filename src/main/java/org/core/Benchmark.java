@@ -19,10 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.core.config.TestCase;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 public abstract class Benchmark {
 
@@ -47,22 +44,10 @@ public abstract class Benchmark {
         this.browserSummary = new SummaryStatisticsExt();
     }
 
-    protected abstract WebDriver getWebDriver();
-
-    protected DesiredCapabilities getCapabilities() {
-        DesiredCapabilities cap = new DesiredCapabilities();
-
-        if (test.getProxy() != null && !test.getProxy().equals("")) {
-            Proxy p = new Proxy();
-            p.setHttpProxy(test.getProxy());
-            cap.setCapability(CapabilityType.PROXY, p);
-        }
-
-        return cap;
-    }
+    protected abstract WebDriver getWebDriver(TestCase test);
 
     public void run() {
-        final WebDriver driver = getWebDriver();
+        final WebDriver driver = getWebDriver(test);
 
         start = new Date(System.currentTimeMillis());
 

@@ -16,6 +16,7 @@ package org.core;
 import org.core.config.TestCase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 public class FirefoxBenchmark extends Benchmark {
 
@@ -24,7 +25,21 @@ public class FirefoxBenchmark extends Benchmark {
     }
 
     @Override
-    protected WebDriver getWebDriver() {
-        return new FirefoxDriver(getCapabilities());
+    protected WebDriver getWebDriver(TestCase test) {
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("general.useragent.override", "Mozilla/5.0 (Linux; U; Android 2.1-update1; de-de; HTC Desire 1.19.161.5 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17");
+        profile.setPreference("network.http.proxy.pipelining", true);
+        
+        if (test.getProxy() != null && !test.getProxy().equals("")) {
+            String[] hostAndPort = test.getProxy().split(":");
+            String host = hostAndPort[0];
+            Integer port = Integer.valueOf(hostAndPort[1]);
+            
+            profile.setPreference("network.proxy.type", 1);
+            profile.setPreference("network.proxy.http", host);
+            profile.setPreference("network.proxy.http_port", port);
+        }
+        
+        return new FirefoxDriver(profile);
     }
 }

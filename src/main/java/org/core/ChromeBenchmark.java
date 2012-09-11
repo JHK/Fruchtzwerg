@@ -23,9 +23,8 @@ public class ChromeBenchmark extends Benchmark {
         super(test);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    protected WebDriver getWebDriver() {
-        return new ChromeDriver(getCapabilities());
+    protected WebDriver getWebDriver(TestCase test) {
+        return new ChromeDriver();
     }
 }
