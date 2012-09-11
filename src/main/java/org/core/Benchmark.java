@@ -34,6 +34,7 @@ public abstract class Benchmark {
 
     public Benchmark(String url) throws MalformedURLException {
         this.url = new URL(url);
+        this.browserSummary = new SummaryStatisticsExt();
     }
 
     protected abstract WebDriver getWebDriver();
@@ -60,8 +61,6 @@ public abstract class Benchmark {
                 driver.get(getUrl());
                 sleep(Config.SLEEP_INTERVAL);
             }
-
-        browserSummary = new SummaryStatisticsExt();
 
         for (int i = 0; i < Config.ITERATIONS; i++) {
             long t0 = System.nanoTime();
