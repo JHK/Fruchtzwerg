@@ -84,8 +84,14 @@ public abstract class Benchmark {
 
     public void printSummary(PrintStream ps) {
         ps.println("--- Summary ---");
-        ps.println("Url:\t\t" + this.test.getUrl());
-        ps.println("Started:\t" + this.start.toString());
+        ps.println("Testcase:");
+        ps.println("Url:\t\t" + test.getUrl());
+        ps.println("Browser:\t" + test.getBrowser());
+        ps.println("Proxy:\t\t" + test.getProxy());
+        ps.println("Bandwidth:\t" + test.getNetwork().getBandwidth());
+        ps.println("Delay:\t\t" + test.getNetwork().getDelay());
+        ps.println("Packet loss:\t" + test.getNetwork().getPacketLoss());
+        ps.println("Started:\t" + start.toString());
         ps.println("Finished:\t" + new Date(System.currentTimeMillis()).toString());
 
         ps.println("\nBrowser statistics:");

@@ -33,11 +33,10 @@ public class Main {
 
             bench.run();
             bench.printSummary(System.out);
-            network.printConfig(System.out);
 
             if (Config.HALT_BETWEEN_TESTS) {
                 System.err.println("Press enter for next test");
-                System.in.read();                
+                System.in.read();
             }
         }
     }
