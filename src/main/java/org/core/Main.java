@@ -13,41 +13,27 @@
  */
 package org.core;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.core.config.Config;
 import org.core.config.Network;
 
 public class Main {
 
-    public static void main(String[] args) throws ConfigurationException, MalformedURLException {
-        Configuration config = getConfig();
-        Integer iterations = config.getInt("Test.iterations");
-        Boolean warmup = config.getBoolean("Test.warmup");
+    public static void main(String[] args) throws MalformedURLException, InstantiationException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        WANemAPI wanem = new WANemAPI(Config.WANem_HOST, Config.WANem_BOTHWAYS);
 
-        String proxyAddress = config.getString("Test.proxy.address", null);
-        Integer proxyPort = config.getInteger("Test.proxy.port", null);
-
-        String WANemHost = config.getString("WANem.host");
-        String[] TestUrls = config.getStringArray("Test.urls.url");
-        Network[] TestNetworks = Network.getNetworks(config);
-
-        WANemAPI wanem = new WANemAPI(WANemHost, config.getBoolean("WANem.bothways"));
-
-        for (String host : TestUrls) {
-            for (Network network : TestNetworks) {
+        for (String host : Config.TEST_URLS) {
+            for (Network network : Config.TEST_NETWORKS) {
                 wanem.set(network.getBandwidth(), network.getDelay(), network.getPacketLoss());
-                ConnectionBenchmark bench = new ConnectionBenchmark(host, iterations, warmup, proxyAddress, proxyPort);
+                @SuppressWarnings("unchecked")
+                Benchmark bench = (Benchmark) Config.BROWSER.getConstructor(String.class).newInstance(host);
                 bench.run();
                 bench.printSummary(System.out);
                 network.printConfig(System.out);
             }
         }
-    }
-
-    private static Configuration getConfig() throws ConfigurationException {
-        return new XMLConfiguration("fruchtzwerg.xml");
     }
 }

@@ -49,17 +49,22 @@ public class WANemAPI {
             delay = (int) delay / 2;
         }
 
-        driver.get(baseUrl + "/WANem/start_advance.php");
-        new Select(driver.findElement(By.name("selInt"))).selectByVisibleText("eth0");
-        driver.findElement(By.name("btnAdvanced")).click();
-        driver.findElement(By.name("txtDelay1")).clear();
-        driver.findElement(By.name("txtDelay1")).sendKeys(String.valueOf(delay));
-        driver.findElement(By.name("txtLoss1")).clear();
-        driver.findElement(By.name("txtLoss1")).sendKeys(String.valueOf(packetLoss));
-        driver.findElement(By.name("txtBandwidth1")).clear();
-        driver.findElement(By.name("txtBandwidth1")).sendKeys(String.valueOf(bandwidth));
-        new Select(driver.findElement(By.name("txtBandwidthAuto1"))).selectByVisibleText("Other");
-        driver.findElement(By.name("btnApply")).click();
+        try {
+            driver.get(baseUrl + "/WANem/start_advance.php");
+            new Select(driver.findElement(By.name("selInt"))).selectByVisibleText("eth0");
+            driver.findElement(By.name("btnAdvanced")).click();
+            driver.findElement(By.name("txtDelay1")).clear();
+            driver.findElement(By.name("txtDelay1")).sendKeys(String.valueOf(delay));
+            driver.findElement(By.name("txtLoss1")).clear();
+            driver.findElement(By.name("txtLoss1")).sendKeys(String.valueOf(packetLoss));
+            driver.findElement(By.name("txtBandwidth1")).clear();
+            driver.findElement(By.name("txtBandwidth1")).sendKeys(String.valueOf(bandwidth));
+            new Select(driver.findElement(By.name("txtBandwidthAuto1"))).selectByVisibleText("Other");
+            driver.findElement(By.name("btnApply")).click();
+        } catch (Exception e) {
+            System.err.println("WANem API not found");
+            e.printStackTrace();
+        }
     }
 
     /**
