@@ -2,8 +2,8 @@
 <fruchtzwerg-definition>
 	<Global>
 		<sleep_interval>50</sleep_interval>
-		<iterations>20</iterations>
-		<warmup>true</warmup>
+		<iterations>1</iterations>
+		<warmup>false</warmup>
 		<halt_between_tests>false</halt_between_tests>
 	</Global>
 	<WANem>
@@ -12,9 +12,9 @@
 	</WANem>
 	<Tests>
 		<TestCase>
-			<browser>Firefox</browser>
+			<browser>Chrome</browser>
 			<proxy>localhost:8080</proxy>
-			<url>http://127.0.0.1/index.html</url>
+			<url>http://m.spiegel.de</url>
 			<network>
 				<!-- Default network -->
 				<bandwidth>0</bandwidth>
@@ -22,27 +22,27 @@
 				<packet-loss>0</packet-loss>
 			</network>
 		</TestCase>
-		<TestCase>
-			<browser>Firefox</browser>
-			<proxy>localhost:8080</proxy>
-			<url>http://127.0.0.1/index.html</url>
-			<network>
-				<!-- DSL light -->
-				<bandwidth>768</bandwidth>
-				<delay>50</delay>
-				<packet-loss>0</packet-loss>
-			</network>
-		</TestCase>
-		<TestCase>
-			<browser>Firefox</browser>
-			<proxy>localhost:8080</proxy>
-			<url>http://127.0.0.1/index.html</url>
-			<network>
-				<!-- HSDPA category 6 -->
-				<bandwidth>3600</bandwidth>
-				<delay>100</delay>
-				<packet-loss>0</packet-loss>
-			</network>
-		</TestCase>
+<!-- 		<TestCase> -->
+<!-- 			<browser>Firefox</browser> -->
+<!-- 			<proxy>localhost:8080</proxy> -->
+<!-- 			<url>http://127.0.0.1/index.html</url> -->
+<!-- 			<network> -->
+<!-- 				DSL light -->
+<!-- 				<bandwidth>768</bandwidth> -->
+<!-- 				<delay>50</delay> -->
+<!-- 				<packet-loss>0</packet-loss> -->
+<!-- 			</network> -->
+<!-- 		</TestCase> -->
+<!-- 		<TestCase> -->
+<!-- 			<browser>Firefox</browser> -->
+<!-- 			<proxy>localhost:8080</proxy> -->
+<!-- 			<url>http://127.0.0.1/index.html</url> -->
+<!-- 			<network> -->
+<!-- 				HSDPA category 6 -->
+<!-- 				<bandwidth>3600</bandwidth> -->
+<!-- 				<delay>100</delay> -->
+<!-- 				<packet-loss>0</packet-loss> -->
+<!-- 			</network> -->
+<!-- 		</TestCase> -->
 	</Tests>
 </fruchtzwerg-definition>
